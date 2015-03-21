@@ -1,0 +1,8 @@
+.cproject
+.project
+main
+*.o
+.DS_Store
+*.out
+.settings/
+Debug/

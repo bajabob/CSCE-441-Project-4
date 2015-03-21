@@ -16,7 +16,6 @@ int window;
 Ant *ant;
 
 void onDisplay( void ) {
-	cout << "onDisplay" << endl;
 
 	glClear( GL_COLOR_BUFFER_BIT );
 
@@ -34,7 +33,8 @@ void onMouse( int button, int state, int x, int y ) {
 }
 
 void onMouseMove( int x, int y ) {
-
+	ant->setAngle(x);
+	glutPostRedisplay();
 }
 
 void onKeyPress( unsigned char key, int x, int y ) {

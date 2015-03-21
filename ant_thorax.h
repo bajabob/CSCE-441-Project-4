@@ -22,10 +22,14 @@ public:
 	}
 
 	void onDisplay() {
-		gluCylinder( this->body, 10.0f, 10.0f, 10.0f, 32, 32 );
+		glTranslatef( this->x, this->y, this->z );
+		gluCylinder( this->body, 3.0f, 3.0f, 10.0f, 32, 32 );
 	}
 
 private:
+	GLdouble x = 0;
+	GLdouble y = 0;
+	GLdouble z = -5;
 	GLUquadricObj *body;
 
 };

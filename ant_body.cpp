@@ -9,15 +9,12 @@ void AntBody::setDimensions( float length, float frontRadius, float backRadius )
 void AntBody::init() {
 	this->body = gluNewQuadric();
 	gluQuadricNormals( this->body, GLU_SMOOTH );
-	gluQuadricTexture( this->body, GL_TRUE );
 
 	this->back = gluNewQuadric();
 	gluQuadricNormals( this->back, GLU_SMOOTH );
-	gluQuadricTexture( this->back, GL_TRUE );
 
 	this->front = gluNewQuadric();
 	gluQuadricNormals( this->front, GLU_SMOOTH );
-	gluQuadricTexture( this->front, GL_TRUE );
 }
 
 void AntBody::onDisplay() {

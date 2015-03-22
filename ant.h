@@ -23,11 +23,16 @@ public:
 
 	void onDisplay();
 
-	void setAngle( int angle );
+	void setAngle( int horizontal, int vertical );
+
+	void setScale( int vertical, int window_height);
 
 	void toggleBoundingBox();
 
 	void toggleJoint();
+
+	void onIncreaseJoint();
+	void onDecreaseJoint();
 
 private:
 
@@ -39,7 +44,10 @@ private:
 	float joint_angle_legs_base = 0;
 	float joint_angle_legs_tip = 20;
 
-	GLdouble angle;
+	float scale = 1.0;
+
+	GLdouble horizontal_spin = 0,
+			 vertical_spin = 0;
 
 	AntBody *thorax;
 	AntBody *abdomen;

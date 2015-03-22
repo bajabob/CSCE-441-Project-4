@@ -11,16 +11,27 @@
 
 #include "ant.h";
 
+const int VIEWMODE_TOTAL = 3;
+const int VIEWMODE_ROTATE = 0;
+const int VIEWMODE_SCALE = 1;
+const int VIEWMODE_TRANSLATE = 2;
+
+int current_viewmode = VIEWMODE_ROTATE;
+
 int window;
 
 Ant *ant;
 
+float translate_horizontal = 0;
+float translate_vertical = 0;
+
 void onDisplay( void ) {
 
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	glTranslatef( translate_horizontal, translate_vertical, 0 );
 	ant->onDisplay();
-
+	glTranslatef( -translate_horizontal, -translate_vertical, 0 );
 	glutSwapBuffers();
 }
 
@@ -33,7 +44,23 @@ void onMouse( int button, int state, int x, int y ) {
 }
 
 void onMouseMove( int x, int y ) {
-	ant->setAngle( x );
+	switch (current_viewmode) {
+	case VIEWMODE_ROTATE:
+		ant->setAngle( x, y );
+		break;
+	case VIEWMODE_SCALE:
+		ant->setScale(y, 400);
+		break;
+	case VIEWMODE_TRANSLATE:
+		int locx = x - 200;
+		int locy = 200 - y;
+
+
+
+		translate_horizontal = (locx * 35) / 400;
+		translate_vertical = (locy * 35) / 400;
+		break;
+	}
 	glutPostRedisplay();
 }
 
@@ -45,10 +72,17 @@ void onKeyPress( unsigned char key, int x, int y ) {
 		exit( 0 );
 		break;
 	case '+':
+	case '=':
+		ant->onIncreaseJoint();
 		break;
 	case '-':
+		ant->onDecreaseJoint();
 		break;
 	case 'v':
+		++current_viewmode;
+		if ( current_viewmode == VIEWMODE_TOTAL ) {
+			current_viewmode = 0;
+		}
 		break;
 	case 'b':
 		ant->toggleBoundingBox();
@@ -97,13 +131,17 @@ void init( void ) {
 	gluLookAt( cameraX, cameraY, cameraZ, centerX, centerY, centerZ, upX, upY,
 			upZ );
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	glColorMaterial( GL_FRONT_AND_BACK, GL_EMISSION );
+	glEnable( GL_COLOR_MATERIAL );
 
-	GLfloat lightpos[] = {.5, 1., 1., 0.};
-	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+	glEnable( GL_LIGHTING );
+	glEnable( GL_LIGHT0 );
 
-	glEnable(GL_DEPTH_TEST);
+	GLfloat lightpos[] = { .4, 1., 1., 0. };
+	glLightfv( GL_LIGHT0, GL_POSITION, lightpos );
+
+	glEnable( GL_DEPTH_TEST );
+	glDisable( GL_TEXTURE_2D );
 }
 
 int main( int argc, char** argv ) {

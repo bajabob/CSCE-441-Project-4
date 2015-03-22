@@ -33,7 +33,7 @@ void onMouse( int button, int state, int x, int y ) {
 }
 
 void onMouseMove( int x, int y ) {
-	ant->setAngle(x);
+	ant->setAngle( x );
 	glutPostRedisplay();
 }
 
@@ -55,31 +55,32 @@ void init( void ) {
 
 	ant->init();
 
-	GLdouble Vol = 10 * 1.8;
-	GLdouble Left = -Vol;
-	GLdouble Right = Vol;
-	GLdouble Bottom = -Vol;
-	GLdouble Top = Vol;
-	GLdouble Near = 0;
-	GLdouble Far = 2 * Vol;
+	GLdouble volume = 1.7 * 10;
+	GLdouble left = -volume;
+	GLdouble right = volume;
+	GLdouble bottom = -volume;
+	GLdouble top = volume;
+	GLdouble near = 0;
+	GLdouble far = 2 * volume;
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	glOrtho( Left, Right, Bottom, Top, Near, Far );
+	glOrtho( left, right, bottom, top, near, far );
 
-	GLdouble eyeX = 0;
-	GLdouble eyeY = 0;
-	GLdouble eyeZ = -100 + Vol;
-	GLdouble centerX = 0;
-	GLdouble centerY = 0;
-	GLdouble centerZ = -100;
 	GLdouble upX = 0;
 	GLdouble upY = 1;
 	GLdouble upZ = 0;
+	GLdouble cameraX = 0;
+	GLdouble cameraY = 0;
+	GLdouble cameraZ = volume + (-100);
+	GLdouble centerX = 0;
+	GLdouble centerY = 0;
+	GLdouble centerZ = -100;
 
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
-	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ );
+	gluLookAt( cameraX, cameraY, cameraZ, centerX, centerY, centerZ, upX, upY,
+			upZ );
 }
 
 int main( int argc, char** argv ) {

@@ -17,7 +17,7 @@ Ant *ant;
 
 void onDisplay( void ) {
 
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	ant->onDisplay();
 
@@ -81,11 +81,20 @@ void init( void ) {
 	glLoadIdentity();
 	gluLookAt( cameraX, cameraY, cameraZ, centerX, centerY, centerZ, upX, upY,
 			upZ );
+
+	// Enable lighting
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	GLfloat lightpos[] = {.5, 1., 1., 0.};
+	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 int main( int argc, char** argv ) {
 	glutInit( &argc, argv );
-	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
+	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
 	glutInitWindowSize( 400, 400 );
 	glutInitWindowPosition( 100, 100 );
 	window = glutCreateWindow( "Robert Timm - Homework 4" );

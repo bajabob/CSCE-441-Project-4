@@ -73,7 +73,7 @@ void Ant::onDisplay() {
 	glRotatef( 180, 0, 1.0, 0.0 );
 	middle_left_leg->onDisplay();
 
-	glTranslatef( 0, 0, 2.5 );
+	glTranslatef( 0, 0, -2.5 );
 	rear_left_leg->onDisplay();
 	glRotatef( 180, 0, 1.0, 0.0 );
 	rear_right_leg->onDisplay();

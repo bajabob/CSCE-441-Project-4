@@ -42,8 +42,10 @@ void Ant::onDisplay() {
 	glTranslatef( 0, 0, -100 );
 	glRotatef( this->angle, 0.0, 1.0, 0.2 );
 
-	// don't have shading, a cube helps design the ant
-	glutWireCube( 20. );
+	// helps show the bounds of the ant
+	if ( show_bounding_box ) {
+		glutWireCube( 20.0 );
+	}
 
 	/**
 	 * The thorax is our local center for the ant,
@@ -59,10 +61,26 @@ void Ant::onDisplay() {
 	abdomen->onPostDisplay();
 
 	glTranslatef( 0, 0, 5.5 );
+	glRotatef( joint_angle_neck, 0, 1.0, 0.0 );
 	neck->onDisplay();
 	head->onDisplay();
 	head->onPostDisplay();
 	neck->onPostDisplay();
+	glRotatef( -joint_angle_neck, 0, 1.0, 0.0 );
+
+	front_left_leg->setBaseAngle( joint_angle_legs_base );
+	front_right_leg->setBaseAngle( joint_angle_legs_base );
+	middle_left_leg->setBaseAngle( joint_angle_legs_base );
+	middle_right_leg->setBaseAngle( joint_angle_legs_base );
+	rear_left_leg->setBaseAngle( joint_angle_legs_base );
+	rear_right_leg->setBaseAngle( joint_angle_legs_base );
+
+	front_left_leg->setTipAngle( joint_angle_legs_tip );
+	front_right_leg->setTipAngle( joint_angle_legs_tip );
+	middle_left_leg->setTipAngle( joint_angle_legs_tip );
+	middle_right_leg->setTipAngle( joint_angle_legs_tip );
+	rear_left_leg->setTipAngle( joint_angle_legs_tip );
+	rear_right_leg->setTipAngle( joint_angle_legs_tip );
 
 	front_left_leg->onDisplay();
 	glRotatef( 180, 0, 1.0, 0.0 );
@@ -86,4 +104,15 @@ void Ant::setAngle( int angle ) {
 		return;
 	}
 	this->angle = angle;
+}
+
+void Ant::toggleBoundingBox() {
+	show_bounding_box = !show_bounding_box;
+}
+
+void Ant::toggleJoint() {
+	++joint_control;
+	if ( joint_control == JOINT_TOTAL ) {
+		joint_control = 0;
+	}
 }

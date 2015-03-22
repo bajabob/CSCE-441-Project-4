@@ -8,6 +8,11 @@
 
 using namespace std;
 
+const int JOINT_TOTAL = 3;
+const int JOINT_NECK = 0;
+const int JOINT_LEGS_BASE = 1;
+const int JOINT_LEGS_TIP = 2;
+
 class Ant {
 
 public:
@@ -20,7 +25,19 @@ public:
 
 	void setAngle( int angle );
 
+	void toggleBoundingBox();
+
+	void toggleJoint();
+
 private:
+
+	bool show_bounding_box = false;
+
+	int joint_control = JOINT_NECK;
+
+	float joint_angle_neck = 0;
+	float joint_angle_legs_base = 0;
+	float joint_angle_legs_tip = 20;
 
 	GLdouble angle;
 

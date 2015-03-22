@@ -43,6 +43,19 @@ void onKeyPress( unsigned char key, int x, int y ) {
 	case 27: // esc key
 		glutDestroyWindow( window );
 		exit( 0 );
+		break;
+	case '+':
+		break;
+	case '-':
+		break;
+	case 'v':
+		break;
+	case 'b':
+		ant->toggleBoundingBox();
+		break;
+	case 'j':
+		ant->toggleJoint();
+		break;
 	default:
 		break;
 	}
@@ -51,6 +64,8 @@ void onKeyPress( unsigned char key, int x, int y ) {
 }
 
 void init( void ) {
+	ant = new Ant();
+
 	glClearColor( 0.0, 0.0, 0.0, 0.0 );
 
 	ant->init();
@@ -82,7 +97,6 @@ void init( void ) {
 	gluLookAt( cameraX, cameraY, cameraZ, centerX, centerY, centerZ, upX, upY,
 			upZ );
 
-	// Enable lighting
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
@@ -103,8 +117,6 @@ int main( int argc, char** argv ) {
 	glutMotionFunc( onMouseMove );
 	glutKeyboardFunc( onKeyPress );
 	glutDisplayFunc( onDisplay );
-
-	ant = new Ant();
 
 	init();
 
